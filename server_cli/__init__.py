@@ -1,14 +1,15 @@
 #!/usr/bin/env python
 # encoding=utf-8
+import sys
+from server_cli.server import *
 
-from server_cli.server_cli import *
-
-def main():
+def sss():
     if len(sys.argv) == 1:
         servers = read_servers()
         display(servers)
-        id = input("id > ")
-        connect_server(id)
+        if len(servers) != 0:
+            id = input("id > ")
+            connect_server(id)
         exit(0)
 
     elif len(sys.argv) == 2:

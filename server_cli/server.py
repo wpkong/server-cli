@@ -1,6 +1,5 @@
 # encoding: utf-8
 import json
-import sys
 from prettytable import PrettyTable
 import subprocess
 
@@ -67,6 +66,11 @@ def read_servers():
     except FileNotFoundError:
         return []
 
+def write_servers(servers):
+    data = json.dumps(servers, indent=2)
+    with open(config_file, "w") as f:
+        f.write(data)
+
 
 def display(servers):
     x = PrettyTable(["id", "name", "user", "host", "port", "tags", "description"])
@@ -117,7 +121,7 @@ def add_server():
         "description": description
     }
     servers.append(server)
-    json.dump(servers, open(config_file, "w"), indent=2)
+    write_servers(servers)
     print("Successfully added!")
 
 
@@ -135,7 +139,7 @@ def delete_server(id):
         return
     else:
         del servers[del_index]
-    json.dump(servers, open(config_file, "w"), indent=2)
+    write_servers(servers)
     print("Successfully deleted!")
 
 
@@ -178,7 +182,7 @@ def modify_server(id):
     if description.strip() != "": server["description"] = description
 
     servers[modify_index] = server
-    json.dump(servers, open(config_file, "w"), indent=2)
+    write_servers(servers)
     print("Successfully added!")
 
 
