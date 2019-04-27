@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='server_cli',
-    version='0.0.5',
+    version='0.0.8',
     author='kwp',
     author_email='i@emmm.wtf',
     url='https://github.com/yjxkwp/server-cli',

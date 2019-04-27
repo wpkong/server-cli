@@ -2,8 +2,9 @@
 import json
 from prettytable import PrettyTable
 import subprocess
+import os
 
-config_file = "~/.server-cli.profile"
+config_file = os.environ['HOME'] + "/.server-cli.profile"
 # config_file = "config.json"
 
 def print_help():
@@ -67,7 +68,7 @@ def read_servers():
         return []
 
 def write_servers(servers):
-    data = json.dumps(servers, indent=2)
+    data = json.dumps(servers, indent=2, ensure_ascii=False)
     with open(config_file, "w") as f:
         f.write(data)
 
@@ -105,7 +106,7 @@ def add_server():
 
     key_file = input("key file path(None if use password): ").strip()
 
-    tags = input("tags (user ',' to split): ")
+    tags = input("tags (use ',' to split): ")
     description = input("description: ")
 
     servers = read_servers()
@@ -116,7 +117,7 @@ def add_server():
         "user": user,
         "host": host,
         "port": port,
-        "key_path": key_file,
+        "key_file": key_file,
         "tags": tags.split(","),
         "description": description
     }
@@ -173,7 +174,7 @@ def modify_server(id):
         else:
             server["port"] = port
 
-    key_file = input("key file path('{}', enter '-' if use password): ".format(server["key_path"])).strip()
+    key_file = input("key file path('{}', enter '-' if use password): ".format(server["key_file"])).strip()
     if key_file.strip() != "": server["key_file"] = key_file
     if key_file.strip() == "-": server["key_file"] = ""
     tags = input("tags ([{}], use ',' to split): ".format(",".join(server["tags"])))
@@ -194,9 +195,9 @@ def find_server_by_tag(tag):
 def connect_server(id):
     validate("id", id)
     id = int(id)
-    config = read_servers()
+    servers = read_servers()
     server = None
-    for ser in config:
+    for ser in servers:
         if id == ser["id"]:
             server = ser
     if server is None:
@@ -204,6 +205,6 @@ def connect_server(id):
         return
     print("Connecting to {}".format(server["name"]))
     cmd = "ssh {}@{} -p {} ".format(server["user"], server["host"], server["port"])
-    if server["key_path"] is not None and server["key_path"] != "":
-        cmd += "-i {}".format(server["key_path"])
+    if server["key_file"] is not None and server["key_file"] != "":
+        cmd += "-i {}".format(server["key_file"])
     subprocess.call(cmd, shell=True)
