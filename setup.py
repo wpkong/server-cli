@@ -5,9 +5,10 @@ from setuptools import setup, find_packages
 
 setup(
     name='server_cli',
-    version='0.0.1',
+    version='0.0.2',
     author='kwp',
     author_email='i@emmm.wtf',
+    url='https://github.com/yjxkwp/server-cli',
     description=u'A server management tool which help you memorize ssh command',
     packages=find_packages(),
     install_requires=[
@@ -15,8 +16,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'jujube=jujube_pill:jujube',
-            'pill=jujube_pill:pill'
+            'sss=server_cli:sss'
         ]
     }
 )

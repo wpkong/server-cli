@@ -1,0 +1,10 @@
+README.rst
+setup.py
+server_cli/__init__.py
+server_cli/server_cli.py
+server_cli.egg-info/PKG-INFO
+server_cli.egg-info/SOURCES.txt
+server_cli.egg-info/dependency_links.txt
+server_cli.egg-info/entry_points.txt
+server_cli.egg-info/requires.txt
+server_cli.egg-info/top_level.txt
