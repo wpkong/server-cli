@@ -23,6 +23,9 @@ def sss():
         elif sys.argv[1] == "help":
             print_help()
             return
+        elif sys.argv[1] == "ping":
+            servers = read_servers()
+            ping_servers(servers)
 
 
     elif len(sys.argv) == 3:

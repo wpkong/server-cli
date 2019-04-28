@@ -3,6 +3,12 @@ import json
 from prettytable import PrettyTable
 import subprocess
 import os
+import ping3
+import sys
+import time
+import threading
+import curses
+
 
 config_file = os.path.join(os.environ['HOME'], ".server-cli.profile")
 
@@ -12,19 +18,20 @@ def print_help():
 Type 'sss' to entry interaction interface.
 
 Available subcommands:
-    ls\t\t\t\tlist all servers
-    add\t\t\t\tadd a new server
+    ls\t\t\t\tList all servers
+    add\t\t\t\tAdd a new server
+    ping\t\t\t\tList all server delays in real time
     help\t\t\t\t
     
-    del <server id>\t\tdelete a server from database by id
-    ssh <server id>\t\tconnect a server via ssh
-    tag <tag name>\t\tlist all servers contained given tag name
-    modify <server id>\t\tmodify attributes of specified server
+    del <server id>\t\tDelete a server from database by id
+    ssh <server id>\t\tConnect a server via ssh
+    tag <tag name>\t\tList all servers contained given tag name
+    modify <server id>\t\tModify attributes of specified server
 """)
 
 
 def validate(key, value):
-    value = value.strip()
+    value = str(value).strip()
     if key == "name":
         if len(value) == 0:
             raise RuntimeError("Input Error: 'name' can NOT be empty!")
@@ -209,3 +216,49 @@ def connect_server(id):
     if server["key_file"] is not None and server["key_file"] != "":
         cmd += "-i {}".format(server["key_file"])
     subprocess.call(cmd, shell=True)
+
+
+def ping_servers(servers):
+    _run = True
+    stdscr = curses.initscr()
+    curses.noecho()
+    curses.cbreak()
+    stdscr.nodelay(1)
+
+    try:
+        def ping(index):
+            while _run:
+                delay = ping3.ping(servers[index]["host"])
+                if not _run: break
+                servers[index]["delay"] = int(delay * 1000)
+                if not _run: break
+                time.sleep(0.5)
+
+        for index in range(len(servers)):
+            servers[index]["delay"] = "inf"
+            t = threading.Thread(target=ping, args=[index])
+            t.start()
+
+        while True:
+            x = PrettyTable(["id", "name", "host", "tags", "description", "delay(ms)"])
+            x.align["id"] = "l"
+            x.padding_width = 1
+            for obj in servers:
+                x.add_row(
+                    [str(obj["id"]), obj["name"], obj["host"],",".join(obj["tags"]),
+                     obj["description"], obj["delay"]])
+            stdscr.clear()
+            stdscr.addstr(str(x))
+            stdscr.refresh()
+            time.sleep(1)
+    except KeyboardInterrupt:
+        sys.exit(0)
+    except Exception as e:
+        print(e)
+        sys.exit(1)
+    finally:
+        _run = False
+        curses.nocbreak()
+        curses.echo()
+        curses.endwin()
+        print("Terminated!")

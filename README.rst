@@ -1,3 +1,11 @@
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Badge](https://img.shields.io/badge/link-996.icu-%23FF4D5B.svg?style=flat-square)](https://996.icu/#/en_US)
+
+
+A server management tool which helps you memorize ssh command
+
+
+
 Installation:
 ==============
 ::
@@ -60,6 +68,21 @@ List all of services::
  | 4  | 腾讯云3号  |  kwp   |     0.0.0.0     |  22  |         script                 |                   |
  +----+-----------+--------+-----------------+------+--------------------------------+-------------------+
 
+
+ping
+-----
+List all server delays in real time::
+
+ $ sss ping
+ +----+-----------+-----------------+--------------------------------+-------------------+-----------+
+ | id |    name   |       host      |              tags              |    description    | delay(ms) |
+ +----+-----------+-----------------+--------------------------------+-------------------+-----------+
+ | 1  | 亚马逊aws  |     0.0.0.0     | shadowsocks,telegramBot,MTpoto |   加利福尼亚机房   |    310    |
+ | 2  |   阿里云   |     0.0.0.0     |        Wechat,shadowsocks      |  阿里云 毕业就到期  |     45    |
+ | 3  | 腾讯云1号  |     0.0.0.0     |          Blog,huginn           |                   |     30    |
+ | 5  | 腾讯云3号  |     0.0.0.0     |             script             |                   |     36    |
+ +----+-----------+-----------------+--------------------------------+-------------------+-----------+
+
 add
 ----
 Add a new server::
@@ -112,7 +135,7 @@ Modify a server with the specified <server id>::
 
 Todo:
 ==============
-- [ ] ping all servers
+- [x] ping all servers
 - [ ] fill password automatically
 - [ ] supports Windows
 
