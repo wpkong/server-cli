@@ -4,8 +4,8 @@ from prettytable import PrettyTable
 import subprocess
 import os
 
-config_file = os.environ['HOME'] + "/.server-cli.profile"
-# config_file = "config.json"
+config_file = os.path.join(os.environ['HOME'], ".server-cli.profile")
+
 
 def print_help():
     print("""Usage:
@@ -21,6 +21,7 @@ Available subcommands:
     tag <tag name>\t\tlist all servers contained given tag name
     modify <server id>\t\tmodify attributes of specified server
 """)
+
 
 def validate(key, value):
     value = value.strip()
@@ -67,6 +68,7 @@ def read_servers():
     except FileNotFoundError:
         return []
 
+
 def write_servers(servers):
     data = json.dumps(servers, indent=2, ensure_ascii=False)
     with open(config_file, "w") as f:
@@ -79,7 +81,7 @@ def display(servers):
     x.padding_width = 1
     for obj in servers:
         x.add_row(
-            [str(obj["id"]), obj["name"],obj["user"], obj["host"], obj["port"],
+            [str(obj["id"]), obj["name"], obj["user"], obj["host"], obj["port"],
              ",".join(obj["tags"]),
              obj["description"]])
     print(x)
@@ -173,11 +175,10 @@ def modify_server(id):
             raise RuntimeError("Input Error: 'port' must be in range between 1 and 65535!")
         else:
             server["port"] = port
-
     key_file = input("key file path('{}', enter '-' if use password): ".format(server["key_file"])).strip()
     if key_file.strip() != "": server["key_file"] = key_file
     if key_file.strip() == "-": server["key_file"] = ""
-    tags = input("tags ([{}], use ',' to split): ".format(",".join(server["tags"])))
+    tags = input("tags([{}], use ',' to split): ".format(",".join(server["tags"])))
     if tags.strip() != "": server["tags"] = tags.split(',')
     description = input("description('{}'): ".format(server["description"]))
     if description.strip() != "": server["description"] = description
