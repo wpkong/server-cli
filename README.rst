@@ -32,6 +32,8 @@ Available subcommands:
 
 - add [add a new server]
 
+- ping [list all server delays in real time (run under root)]
+
 - help
 
 - del <server id> [delete a server from database by id]
@@ -79,7 +81,7 @@ List all of services::
 
 ping
 -----
-List all server delays in real time::
+List all server delays in real time (run under **root**)::
 
  $ sss ping
  +----+-----------+-----------------+--------------------------------+-------------------+-----------+
