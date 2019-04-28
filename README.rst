@@ -1,8 +1,12 @@
+===========
+Server-cli
+===========
+|License: MIT| |Badge|
 
-.. | License: MIT | image:: https://img.shields.io/badge/License-MIT-yellow.svg
+.. |License: MIT| image:: https://img.shields.io/badge/License-MIT-yellow.svg
     :target: https://opensource.org/licenses/MIT
 
-.. | Badge | image:: https://img.shields.io/badge/link-996.icu-%23FF4D5B.svg?style=flat-square
+.. |Badge| image:: https://img.shields.io/badge/link-996.icu-%23FF4D5B.svg?style=flat-square
     :target: https://996.icu/#/en_US
 
 
