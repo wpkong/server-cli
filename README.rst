@@ -1,6 +1,10 @@
-.. |License: MIT| image:: https://img.shields.io/badge/License-MIT-yellow.svg
 
-.. |Badge| image:: https://img.shields.io/badge/link-996.icu-%23FF4D5B.svg?style=flat-square
+.. | License: MIT | image:: https://img.shields.io/badge/License-MIT-yellow.svg
+    :target: https://opensource.org/licenses/MIT
+
+.. | Badge | image:: https://img.shields.io/badge/link-996.icu-%23FF4D5B.svg?style=flat-square
+    :target: https://996.icu/#/en_US
+
 
 A server management tool which helps you memorize ssh command
 
