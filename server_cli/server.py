@@ -8,6 +8,7 @@ import sys
 import time
 import threading
 import curses
+import platform
 
 
 config_file = os.path.join(os.environ['HOME'], ".server-cli.profile")
@@ -113,7 +114,7 @@ def add_server():
     if port == "": port = "22"
     validate("port", port)
 
-    key_file = input("key file path(None if use password): ").strip()
+    key_file = input("key file path (None if use password): ").strip()
 
     tags = input("tags (use ',' to split): ")
     description = input("description: ")
@@ -212,6 +213,9 @@ def connect_server(id):
         print("Server not found")
         return
     print("Connecting to {}".format(server["name"]))
+    # if os.name == 'posix':
+    #     os.system("export iterm2_hostname={}".format(server["host"]))
+    #     os.system("export iterm2_hostname={}".format(server["host"]))
     cmd = "ssh {}@{} -p {} ".format(server["user"], server["host"], server["port"])
     if server["key_file"] is not None and server["key_file"] != "":
         cmd += "-i {}".format(server["key_file"])

@@ -148,4 +148,5 @@ Todo:
 - [x] ping all servers
 - [ ] fill password automatically
 - [ ] supports Windows
+- [ ] scp
 
